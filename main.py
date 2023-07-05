@@ -1,5 +1,6 @@
 import customtkinter # A module which makes tkinter look better and more customizeable
 import tkinter as tk # A built-in python module used to create guis
+from PIL import Image
 import random, pyperclip # The "random" module is a built-in module that is used to include random events. The "pyperclip" module is used to copy the "key".
 from toolTip import CreateToolTip
 
@@ -18,7 +19,7 @@ customtkinter.set_appearance_mode("System")
 app = customtkinter.CTk()
 app.geometry(f'{screenWidth}x{screenHeight}')
 app.title("SecretPy")
-app.iconphoto(False, tk.PhotoImage(file = "images/detective.png"))
+app.iconbitmap("images/detective.ico")
 
 """
 Here we create customtkinter frames.
@@ -34,7 +35,7 @@ settings = customtkinter.CTkFrame(app, width = screenWidth, height = screenHeigh
 
 #
 def keyLabelFunc(master):
-    keyLabel = customtkinter.CTkLabel(master = master, text = key, text_font = ("Lucida Sans", 13), width = 250)
+    keyLabel = customtkinter.CTkLabel(master = master, text = key, font = ("Lucida Sans", 13), width = 250)
     keyLabel.place(x = screenWidth / 2 - 125, y = screenHeight / 2 - 80)    
 
 def backButtonFunc(master):
@@ -96,7 +97,7 @@ def goToSettings():
             passFrame.forget()
             setFrame.pack()
         else:
-            eraseWarning = customtkinter.CTkLabel(master = passFrame, text = "Wrong Password!", text_font = ("Lucida Sans", 11), text_color = "#ff0000")
+            eraseWarning = customtkinter.CTkLabel(master = passFrame, text = "Wrong Password!", font = ("Lucida Sans", 11), text_color = "#ff0000")
             eraseWarning.place(x = screenWidth / 2 - 80, y = screenHeight / 2 + 35)
             eraseWarning.after(1500, lambda: eraseWarning.destroy())
 
@@ -109,11 +110,11 @@ def goToSettings():
             passFile = open("data/pass.txt", "w")
             passFile.write(newPass.get())
             passFile.close()
-            warningPassLabel = customtkinter.CTkLabel(master = passFrame, text = "Password set!", text_font = ("Lucida Sans", 11), text_color = "#0dd127")
+            warningPassLabel = customtkinter.CTkLabel(master = passFrame, text = "Password set!", font = ("Lucida Sans", 11), text_color = "#0dd127")
             warningPassLabel.place(x = screenWidth / 2 - 70, y = screenHeight / 2 - 140)
             warningPassLabel.after(1500, lambda: warningPassLabel.destroy())
         else:
-            warningPassLabel = customtkinter.CTkLabel(master = passFrame, text = "Password entered does not match current password!", text_font = ("Lucida Sans", 11), text_color = "#ff0000")
+            warningPassLabel = customtkinter.CTkLabel(master = passFrame, text = "Password entered does not match current password!", font = ("Lucida Sans", 11), text_color = "#ff0000")
             warningPassLabel.place(x = screenWidth / 2 - 205, y = screenHeight / 2 - 140)
             warningPassLabel.after(1500, lambda: warningPassLabel.destroy())
 
@@ -128,9 +129,9 @@ def goToSettings():
         setFrame.forget()
         passFrame.pack()
 
-    setPassLabel = customtkinter.CTkLabel(master = setFrame, text = "Set Password", text_font = ("Lucida Sans", 13))
+    setPassLabel = customtkinter.CTkLabel(master = setFrame, text = "Set Password", font = ("Lucida Sans", 13))
     setPassLabel.place(x = screenWidth / 2 - 80, y = screenHeight / 2 - 90)
-    setPassInput = customtkinter.CTkEntry(master = setFrame, width = 208, height = 30, text_font = ("Lucida Sans", 10))
+    setPassInput = customtkinter.CTkEntry(master = setFrame, width = 208, height = 30, font = ("Lucida Sans", 10))
     setPassInput.insert(0, "Set password here...")
     def clearKey(event):
         setPassInput.delete(0, tk.END)
@@ -142,9 +143,9 @@ def goToSettings():
     setView = customtkinter.CTkButton(master = setFrame, text = "", image = tk.PhotoImage(file = "images/view.png"), width = 29, height = 29, command = lambda: showHide(setPassInput))
     setView.place(x = screenWidth / 2 + 90, y = screenHeight / 2 - 50)
 
-    passHeading = customtkinter.CTkLabel(master = passFrame, text = "Reset Password", text_font = ("Lucida Sans", 13))
+    passHeading = customtkinter.CTkLabel(master = passFrame, text = "Reset Password", font = ("Lucida Sans", 13))
     passHeading.place(x = screenWidth / 2 - 70, y = screenHeight / 2 - 135)
-    currentPass = customtkinter.CTkEntry(master = passFrame, width = 208, height = 30, text_font = ("Lucida Sans", 10))
+    currentPass = customtkinter.CTkEntry(master = passFrame, width = 208, height = 30, font = ("Lucida Sans", 10))
     currentPass.insert(0, "Type current password here...")
     def clearKey(event):
         currentPass.delete(0, tk.END)
@@ -153,7 +154,7 @@ def goToSettings():
     currentPass.place(x = screenWidth / 2 - 125, y = screenHeight / 2 - 100)
     setView1 = customtkinter.CTkButton(master = passFrame, text = "", image = tk.PhotoImage(file = "images/view.png"), width = 29, height = 29, command = lambda: showHide(currentPass))
     setView1.place(x = screenWidth / 2 + 90, y = screenHeight / 2 - 100)
-    newPass = customtkinter.CTkEntry(master = passFrame, width = 208, height = 30, text_font = ("Lucida Sans", 10))
+    newPass = customtkinter.CTkEntry(master = passFrame, width = 208, height = 30, font = ("Lucida Sans", 10))
     newPass.insert(0, "Type new password here...")
     def clearKey(event):
         newPass.delete(0, tk.END)
@@ -164,11 +165,11 @@ def goToSettings():
     setView2.place(x = screenWidth / 2 + 90, y = screenHeight / 2 - 70)
     changePassButton = customtkinter.CTkButton(master = passFrame, text = "Change password", width = 170, command = changePass)
     changePassButton.place(x = screenWidth / 2 - 85, y = screenHeight / 2 - 30)
-    line = customtkinter.CTkLabel(master = passFrame, text = "-------------------------------------------", text_font = ("Lucida Sans", 21))
+    line = customtkinter.CTkLabel(master = passFrame, text = "-------------------------------------------", font = ("Lucida Sans", 21))
     line.place(x = screenWidth / 2 - 200, y = screenHeight / 2)
-    eraseHeading = customtkinter.CTkLabel(master = passFrame, text = "Erase all data", text_font = ("Lucida Sans", 13))
+    eraseHeading = customtkinter.CTkLabel(master = passFrame, text = "Erase all data", font = ("Lucida Sans", 13))
     eraseHeading.place(x = screenWidth / 2 - 70, y = screenHeight / 2 + 35)
-    erasePass = customtkinter.CTkEntry(master = passFrame, width = 208, height = 30, text_font = ("Lucida Sans", 10))
+    erasePass = customtkinter.CTkEntry(master = passFrame, width = 208, height = 30, font = ("Lucida Sans", 10))
     erasePass.insert(0, "Enter password here...")
     def clearKey(event):
         erasePass.delete(0, tk.END)
@@ -190,7 +191,7 @@ def goToSettings():
         passFrame.pack()
 
     backButtonFunc(settings)
-    setHeading = customtkinter.CTkLabel(master = settings, text = "Settings", text_font = ("Lucida Sans", 25))
+    setHeading = customtkinter.CTkLabel(master = settings, text = "Settings", font = ("Lucida Sans", 25))
     setHeading.place(x = screenWidth / 2 - 70, y = screenHeight / 2 - 190)
     main.forget()
     settings.pack()
@@ -237,7 +238,7 @@ def submitKey():
                 break
             
     if (len(input) != len(symbols) or invalid == True):
-        warningLabel = customtkinter.CTkLabel(master = enterKey, text = "Invalid key format!", text_font = ("Lucida Sans", 13), text_color = "#ff0000", width = 250)
+        warningLabel = customtkinter.CTkLabel(master = enterKey, text = "Invalid key format!", font = ("Lucida Sans", 13), text_color = "#ff0000", width = 250)
         warningLabel.place( x = screenWidth / 2 - 125, y = screenHeight / 2 - 80)
     else:
         input = keyInput.get()
@@ -251,11 +252,11 @@ def verify(button):
     if (boolFile.read() == "false"):
         match(button):
             case "save":
-                warningLabel = customtkinter.CTkLabel(master = gen, text = "Please set password in settings to use this feature!", text_font = ("Lucida Sans", 11), text_color = "#ff0000", width = 250)
+                warningLabel = customtkinter.CTkLabel(master = gen, text = "Please set password in settings to use this feature!", font = ("Lucida Sans", 11), text_color = "#ff0000", width = 250)
                 warningLabel.place(x = screenWidth / 2 - 190, y = screenHeight / 2 + 50)
                 warningLabel.after(1500, lambda: warningLabel.destroy())
             case "load":
-                warningLabel = customtkinter.CTkLabel(master = enterKey, text = "Please set password in settings to use this feature!", text_font = ("Lucida Sans", 11), text_color = "#ff0000", width = 250)
+                warningLabel = customtkinter.CTkLabel(master = enterKey, text = "Please set password in settings to use this feature!", font = ("Lucida Sans", 11), text_color = "#ff0000", width = 250)
                 warningLabel.place(x = screenWidth / 2 - 190, y = screenHeight / 2 - 75)
                 warningLabel.after(1500, lambda: warningLabel.destroy())
         return
@@ -286,7 +287,7 @@ def verify(button):
                 case "save":
                     keyFile = open("data/key.txt", "w")
                     keyFile.write(key)
-                    successLabel = customtkinter.CTkLabel(master = gen, text = "Key saved successfully!", text_font = ("Lucida Sans", 11), text_color = "#00ff00", width = 250)
+                    successLabel = customtkinter.CTkLabel(master = gen, text = "Key saved successfully!", font = ("Lucida Sans", 11), text_color = "#00ff00", width = 250)
                     successLabel.place(x = screenWidth / 2 - 120, y = screenHeight / 2 + 50)
                     successLabel.after(1500, lambda: successLabel.destroy())
                 case "load":
@@ -299,13 +300,13 @@ def verify(button):
                     scene = "encode/decode"
 
         else: 
-            veriWarning = customtkinter.CTkLabel(master = passWin, text = "Wrong Password!", text_font = ("Lucida Sans", 11), text_color = "#ff0000")
+            veriWarning = customtkinter.CTkLabel(master = passWin, text = "Wrong Password!", font = ("Lucida Sans", 11), text_color = "#ff0000")
             veriWarning.place(x = veriWidth / 2 - 80, y = veriHeight / 2 - 100)
             veriWarning.after(1500, lambda: veriWarning.destroy())
 
-    verifyLabel = customtkinter.CTkLabel(master = passWin, text = "Verify Password", text_font = ("Lucida Sans", 13))
+    verifyLabel = customtkinter.CTkLabel(master = passWin, text = "Verify Password", font = ("Lucida Sans", 13))
     verifyLabel.place(x = veriWidth / 2 - 90, y = veriHeight / 2 - 60)
-    veriPassInput = customtkinter.CTkEntry(master = passWin, width = 208, height = 30, text_font = ("Lucida Sans", 10))
+    veriPassInput = customtkinter.CTkEntry(master = passWin, width = 208, height = 30, font = ("Lucida Sans", 10))
     veriPassInput.insert(0, "Enter password here...")
     def clearKey(event):
         veriPassInput.delete(0, tk.END)
@@ -320,12 +321,12 @@ def verify(button):
 def getOption(choice):
     global option
     if (choice == "Encode"):
-        label2 = customtkinter.CTkLabel(master = encodeDecode, text = "Encoded Message", text_font = ("Lucida Sans", 12))
+        label2 = customtkinter.CTkLabel(master = encodeDecode, text = "Encoded Message", font = ("Lucida Sans", 12))
         label2.place(x = screenWidth / 2 + 110, y = screenHeight / 2 - 145)
         encodeDecode.forget()
         encodeDecode.pack()
     elif (choice == "Decode"):
-        label2 = customtkinter.CTkLabel(master = encodeDecode, text = "Decoded Message", text_font = ("Lucida Sans", 12))
+        label2 = customtkinter.CTkLabel(master = encodeDecode, text = "Decoded Message", font = ("Lucida Sans", 12))
         label2.place(x = screenWidth / 2 + 110, y = screenHeight / 2 - 145)
         encodeDecode.forget()
         encodeDecode.pack()
@@ -337,7 +338,7 @@ def copyEncrypt():
 
 def convertMsg():
     if (option == None or option == "Select"):
-        warningLabel = customtkinter.CTkLabel(master = encodeDecode, text = "Please select an option first!", text_font = ("Lucida Sans", 11), text_color = "#ff0000", width = 250)
+        warningLabel = customtkinter.CTkLabel(master = encodeDecode, text = "Please select an option first!", font = ("Lucida Sans", 11), text_color = "#ff0000", width = 250)
         warningLabel.place(x = screenWidth / 2 - 130, y = screenHeight / 2 - 145)
         warningLabel.after(1500, lambda: warningLabel.destroy())
     elif (option == "Encode"):
@@ -375,7 +376,7 @@ def loadMsg():
     msgFile = open("data/saved_msg.txt", "r")
     leftTextbox.delete("1.0", "end-1c")
     leftTextbox.insert("1.0", msgFile.read())
-    successLabel = customtkinter.CTkLabel(master = encodeDecode, text = "Message Loaded", text_font = ("Lucida Sans", 11), text_color = "#00ff00", width = 250)
+    successLabel = customtkinter.CTkLabel(master = encodeDecode, text = "Message Loaded", font = ("Lucida Sans", 11), text_color = "#00ff00", width = 250)
     successLabel.place(x = screenWidth / 2 - 120, y = screenHeight / 2 - 145)
     successLabel.after(1500, lambda: successLabel.destroy())
     msgFile.close()
@@ -383,7 +384,7 @@ def loadMsg():
 def saveMsg():
     msgFile = open("data/saved_msg.txt", "w")
     msgFile.write(rightTextbox.get("1.0", "end-1c"))
-    successLabel = customtkinter.CTkLabel(master = encodeDecode, text = "Message Saved", text_font = ("Lucida Sans", 11), text_color = "#00ff00", width = 250)
+    successLabel = customtkinter.CTkLabel(master = encodeDecode, text = "Message Saved", font = ("Lucida Sans", 11), text_color = "#00ff00", width = 250)
     successLabel.place(x = screenWidth / 2 - 120, y = screenHeight / 2 - 145)
     successLabel.after(1500, lambda: successLabel.destroy())
     msgFile.close()
@@ -409,20 +410,20 @@ def switchBack():
             scene = "main"
 
 # Main page
-headingLabel = customtkinter.CTkLabel(master = main, text = "SecretPy", text_font = ("Freestyle Script", 50), width = 250, height = 75)
+headingLabel = customtkinter.CTkLabel(master = main, text = "SecretPy", font = ("Freestyle Script", 50), width = 250, height = 75)
 headingLabel.place(x = screenWidth / 2 - 125, y = screenHeight / 2 - 175)
-infoLabel = customtkinter.CTkLabel(master = main, text = "A MONO-ALPHABETIC CIPHER TOOL", text_font = ("Bahnschrift SemiBold", 13), width = 300)
+infoLabel = customtkinter.CTkLabel(master = main, text = "A MONO-ALPHABETIC CIPHER TOOL", font = ("Bahnschrift SemiBold", 13), width = 300)
 infoLabel.place(x = screenWidth / 2 - 150, y = screenHeight / 2 - 100)
-genKeyButton = customtkinter.CTkButton(master = main, text = "Generate Key", command = goToGen)
-genKeyButton.place(width = 170, x = screenWidth / 2 - 70, y = screenHeight / 2 - 20)
-enterKeyButton = customtkinter.CTkButton(master = main, text = "Enter Key", command = goToEnterKey)
-enterKeyButton.place(width = 170, x = screenWidth / 2 - 70, y = screenHeight / 2 + 25)
+genKeyButton = customtkinter.CTkButton(master = main, text = "Generate Key", command = goToGen, width = 170)
+genKeyButton.place(x = screenWidth / 2 - 70, y = screenHeight / 2 - 20)
+enterKeyButton = customtkinter.CTkButton(master = main, text = "Enter Key", command = goToEnterKey, width = 170)
+enterKeyButton.place(x = screenWidth / 2 - 70, y = screenHeight / 2 + 25)
 settingsButton = customtkinter.CTkButton(master = main, text = "", image = tk.PhotoImage(file = "images/settings.png"), command = goToSettings, width = 35)
 settingsButton.place(x = 555, y = 10)
 main.pack()
 
 # Generation page
-genKeyLabel = customtkinter.CTkLabel(master = gen, text = "GENERATED KEY", text_font = ("Lucida Sans", 18), width = 250, height = 50)
+genKeyLabel = customtkinter.CTkLabel(master = gen, text = "GENERATED KEY", font = ("Lucida Sans", 18), width = 250, height = 50)
 genKeyLabel.place(x = screenWidth / 2 - 125,  y = screenHeight / 2 - 195)
 genNewKeyButton = customtkinter.CTkButton(master = gen, text = "Generate New Key", command = genNewKey, width = 170)
 genNewKeyButton.place(x = screenWidth / 2 - 85, y = screenHeight / 2)
@@ -434,7 +435,7 @@ genSaveButton.place(x = screenWidth / 2 + 5, y = screenHeight / 2 - 50)
 CreateToolTip(genSaveButton, "Save Key")
 
 # Enter key
-keyInput = customtkinter.CTkEntry(master = enterKey, width = 250, height = 30, text_font = ("Lucida Sans", 10))
+keyInput = customtkinter.CTkEntry(master = enterKey, width = 250, height = 30, font = ("Lucida Sans", 10))
 keyInput.insert(0, "Enter key here...")
 def clearKey(event):
     keyInput.delete(0, tk.END)
@@ -449,11 +450,11 @@ loadKeyButton.place(x = screenWidth / 2, y = screenHeight / 2)
 backButtonFunc(encodeDecode)
 encodeDecodeOption = customtkinter.CTkOptionMenu(master = encodeDecode, values = ["Select", "Encode", "Decode"], width = 150, command = getOption)
 encodeDecodeOption.place(x = screenWidth / 2 - 75, y = screenHeight / 2 - 185)
-leftTextbox = customtkinter.CTkTextbox(master = encodeDecode, width = 200, height = 270, text_font = ("Lucida Sans", 9), fg_color = "#474747")
+leftTextbox = customtkinter.CTkTextbox(master = encodeDecode, width = 200, height = 270, font = ("Lucida Sans", 9), fg_color = "#474747")
 leftTextbox.place(x = screenWidth / 2 - 280, y = screenHeight / 2 - 110)
-rightTextbox = customtkinter.CTkTextbox(master = encodeDecode, width = 200, height = 270, text_font = ("Lucida Sans", 9), fg_color = "#474747")
+rightTextbox = customtkinter.CTkTextbox(master = encodeDecode, width = 200, height = 270, font = ("Lucida Sans", 9), fg_color = "#474747")
 rightTextbox.place(x = screenWidth / 2 + 80, y = screenHeight / 2 - 110)
-label1 = customtkinter.CTkLabel(master = encodeDecode, text = "Enter text", text_font = ("Lucida Sans", 12))
+label1 = customtkinter.CTkLabel(master = encodeDecode, text = "Enter text", font = ("Lucida Sans", 12))
 label1.place(x = screenWidth / 2 - 250, y = screenHeight / 2 - 145)
 convertButton = customtkinter.CTkButton(master = encodeDecode, text = "Convert", command = convertMsg, width = 100)
 convertButton.place(x = screenWidth / 2 - 50, y = screenHeight / 2 + 10)
