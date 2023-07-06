@@ -1,6 +1,5 @@
 import customtkinter # A module which makes tkinter look better and more customizeable
 import tkinter as tk # A built-in python module used to create guis
-from PIL import Image
 import random, pyperclip # The "random" module is a built-in module that is used to include random events. The "pyperclip" module is used to copy the "key".
 from toolTip import CreateToolTip
 
